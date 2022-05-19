@@ -16,6 +16,3 @@ def send_notification(brand, discount, user):
 def example_task():
     logger.info("Test")
     return f"Test"
-
-
-u

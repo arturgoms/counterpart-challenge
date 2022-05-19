@@ -5,15 +5,10 @@ from rest_framework.permissions import BasePermission
 
 class UserRoleEnum(Enum):
     USER = 0
-    BRAND = 1
 
     @classmethod
     def is_user(cls, user):
         return user.role == cls.USER.value
-
-    @classmethod
-    def is_brand(cls, user):
-        return user.role == cls.BRAND.value
 
 
 class BaseRolePermission(BasePermission):
@@ -55,21 +50,3 @@ class IsUser(BaseRolePermission):
 
     def has_role_permission(self, request):
         return UserRoleEnum.is_user(request.user)
-
-
-class IsBrand(BaseRolePermission):
-    """
-    The request is authenticated as a panel_user, or cors http verbs.
-    """
-
-    def has_role_permission(self, request):
-        return UserRoleEnum.is_brand(request.user)
-
-
-class IsUserOrBrand(BaseRolePermission):
-    """
-    The request is authenticated as a panel_user or brand, or cors http verbs.
-    """
-
-    def has_role_permission(self, request):
-        return UserRoleEnum.is_brand(request.user) or UserRoleEnum.is_user(request.user)

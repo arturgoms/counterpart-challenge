@@ -10,15 +10,12 @@ def generate_user_token(instance, exp=None):
     WARNING: This method was created just to development and test purpose,
         never call this in a production environment.
     """
-    if isinstance(instance, models.User):
+    if isinstance(instance, models.PanelUser):
         role = UserRoleEnum.USER.value
-
-    elif isinstance(instance, models.Brand):
-        role = UserRoleEnum.BRAND.value
 
     else:
         raise TypeError(
-            "Instance must be 'domain.models.Brand' or 'domain.models.User' type."
+            "Instance must be or 'domain.models.User' type."
         )
 
     return jwt.Jwt.generate(key=jwt.JWT_KEY, exp=exp, id=str(instance.pk), role=role)
