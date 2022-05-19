@@ -9,27 +9,59 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('domain', '0002_alter_results_distance'),
+        ("domain", "0002_alter_results_distance"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='results',
-            options={'ordering': ['-created_at'], 'verbose_name': 'Result', 'verbose_name_plural': 'Results'},
+            name="results",
+            options={
+                "ordering": ["-created_at"],
+                "verbose_name": "Result",
+                "verbose_name_plural": "Results",
+            },
         ),
         migrations.CreateModel(
-            name='UserRole',
+            name="UserRole",
             fields=[
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created At')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated At')),
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, verbose_name='Id')),
-                ('role', models.CharField(blank=True, max_length=500, null=True, verbose_name='Role')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_roles', to=settings.AUTH_USER_MODEL, verbose_name='PanelUser')),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created At"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Updated At"),
+                ),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="Id",
+                    ),
+                ),
+                (
+                    "role",
+                    models.CharField(
+                        blank=True, max_length=500, null=True, verbose_name="Role"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="user_roles",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="PanelUser",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'User Role',
-                'verbose_name_plural': 'Users Roles',
-                'db_table': 'user_role',
+                "verbose_name": "User Role",
+                "verbose_name_plural": "Users Roles",
+                "db_table": "user_role",
             },
         ),
     ]
