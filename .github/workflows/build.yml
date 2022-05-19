@@ -10,8 +10,8 @@ env:
   IMAGE_NAME: earthquake-service
 
 jobs:
-  lint_django_job:
-    uses: arturgoms/counterpart-challenge/.github/workflows/lint.yml@master
+#  lint_django_job:
+#    uses: arturgoms/counterpart-challenge/.github/workflows/lint.yml@master
   test_django_job:
     uses: arturgoms/counterpart-challenge/.github/workflows/tests.yml@master
   format_django_job:
