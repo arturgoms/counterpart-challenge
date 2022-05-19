@@ -5,6 +5,8 @@
 * Earthquake search service
 ** Documentation
 The API document can be found in src/docs/api.openapi.json
+#+html: <p align="center"><img src="https://github.com/arturgoms/counterpart-challenge/example.gif" /></p>
+
 ** Features
 - Django 4 project with a really nice structure
 - Locale to translate the panel

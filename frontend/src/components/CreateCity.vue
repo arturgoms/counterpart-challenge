@@ -3,8 +3,8 @@
     <div class="city-create-container">
       <input v-model="form.name" type="text" id="name" name="name" placeholder="Name">
       <input v-model="form.country_code" type="text" id="country_code" name="country_code" placeholder="Country Code">
-      <input v-model="form.latitude" type="number" id="latitude" name="latitude" placeholder="Latitude" step="0.01">
-      <input v-model="form.longitude" type="number" id="longitude" name="longitude" placeholder="Longitude" step="0.01">
+      <input v-model="form.latitude" type="number" id="latitude" name="latitude" placeholder="Latitude" step="0.000001">
+      <input v-model="form.longitude" type="number" id="longitude" name="longitude" placeholder="Longitude" step="0.000001">
     </div>
     <button type="submit">Create</button>
   </form>
