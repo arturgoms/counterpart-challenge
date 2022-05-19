@@ -2,7 +2,7 @@
 
 #+html: <p align="center"><img src="https://github.com/arturgoms/counterpart-challenge/actions/workflows/build.yml/badge.svg" /></p>
 
-* Discount service
+* Earthquake search service
 ** Documentation
 The API document can be found in src/docs/api.openapi.json
 ** Features
