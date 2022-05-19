@@ -27,7 +27,9 @@ The API document can be found in src/docs/api.openapi.json
 #+BEGIN_SRC shell
 git clone git@github.com:arturgoms/counterpart-challenge.git
 cd counterpart-challenge
+cp .env.template .env
 #+END_SRC
+** inside .env uncomment line 20 and comment the line 17 **
 2 Create the environment:
 #+BEGIN_SRC shell
 poetry install
@@ -52,27 +54,25 @@ python src/manage.py runserver
 - admin - http:/127.0.0.1:8000/admin
 - silk - http:/127.0.0.1:8000/silk
 - api - http:/127.0.0.1:8000/api
+6 Run the frontend
+#+BEGIN_SRC shell
+cd frontend
+npm install
+npm run serve
+#+END_SRC
+7 Access
+- frontend - http:/127.0.0.1:8080/
 
 *** Docker compose
 Alternatively you can run everything inside container but you ill need to build it everytime that you change something in the django app
 
-Go to .env and uncomment the line 17 and 30:
-
-#+BEGIN_SRC shell
-17 DATABASE_URL=postgres://postgres:postgres@db:5432/earthquake-service
-30 CELERY_BROKER_URL=redis://:@redis:6379/0
-#+END_SRC
-
 Up the containers:
-#+BEGIN_SRC shell
-docker compose up -d
-#+END_SRC
-To rebuild:
 #+BEGIN_SRC shell
 docker compose up -d --build
 #+END_SRC
+
 Now you need to use the nginx port to access it:
-- admin - http:/127.0.0.1:80/admin
+- frontend - http:/127.0.0.1:80/
 - api - http:/127.0.0.1:80/api
 And Silk will not exist anymore because you are using a 'production like' environment.
 - If you get 502 bad gateway just wait a little :)
