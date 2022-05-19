@@ -21,7 +21,7 @@ from django.utils.translation import gettext_lazy as _
 # to control the entire project version.
 from rest_framework.reverse import reverse_lazy
 
-VERSION = "1.0.5"
+VERSION = "1.0.8"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -113,7 +113,7 @@ WSGI_APPLICATION = "wsgi.application"
 DATABASES = {
     "default": config(
         "DATABASE_URL",
-        default="postgres://postgres:postgres@localhost:5432/base",
+        default="postgres://postgres:postgres@localhost:5432/earthquake-service",
         cast=dj_database_url.parse,
     )
 }
@@ -133,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # The model to use to represent a User.
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-user-model
 
-AUTH_USER_MODEL = "domain.User"
+AUTH_USER_MODEL = "domain.PanelUser"
 
 # Superuser Settings
 
@@ -214,7 +214,7 @@ PUBLIC_API_ACCESS_KEY = config(
 # CORS Settings
 # https://github.com/adamchainz/django-cors-headers
 
-CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", False, cast=bool)
+CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", True, cast=bool)
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", "", cast=decouple.Csv())
 
 CORS_ALLOW_METHODS = config(
@@ -224,7 +224,7 @@ CORS_ALLOW_METHODS = config(
 CORS_ALLOW_HEADERS = config(
     "CORS_ALLOW_HEADERS",
     "accept,accept-encoding,accept-timezone,authorization,content-type,dnt,origin,"
-    "user-agent,x-csrftoken,x-requested-with",
+    "panel_user-agent,x-csrftoken,x-requested-with,Cache-Control",
     cast=decouple.Csv(),
 )
 
@@ -243,7 +243,7 @@ ADMIN_SITE_URL = None  # Remove site URL
 ADMIN_SHORTCUTS = [
     {
         "title": _("Users"),
-        "url": reverse_lazy("admin:domain_user_changelist"),
+        "url": reverse_lazy("admin:domain_paneluser_changelist"),
         "icon": {"name": "users"},
     }
 ]
@@ -394,8 +394,8 @@ CELERY_TASK_SOFT_TIME_LIMIT = 30
 CELERY_BROKER_URL = config("CELERY_BROKER_URL", default="redis://:@localhost:6379/0")
 
 CELERY_BEAT_SCHEDULE = {
-    "example_task": {
-        "task": "example_task",
-        "schedule": celery.schedules.crontab(minute="*"),
-    }
+    # "example_task": {
+    #     "task": "example_task",
+    #     "schedule": celery.schedules.crontab(minute="*"),
+    # }
 }

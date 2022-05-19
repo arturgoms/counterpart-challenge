@@ -1,51 +1,141 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
-    "title": "Base Django API Specification",
-    "description": "Base Django API Specification",
-    "version": "1.0.0",
+    "title": "earthquake-search-api",
+    "version": "1.0",
+    "description": "API Specification for the earthquake-search service",
     "contact": {
-      "name": "Base Django",
-      "email": "contato@arturgomes.com.br",
-      "url": "www.arturgomes.com.br"
+      "name": "Artur Gomes"
     }
   },
   "servers": [
     {
-      "url": "//127.0.0.1:8000/api"
+      "url": "http://127.0.0.1:8000/api",
+      "description": "development"
     }
   ],
   "paths": {
-    "/health/": {
+    "/cities/": {
       "get": {
-        "summary": "Check the health of the API",
-        "tags": [
-        ],
+        "summary": "List Cities",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BadRequest"
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    },
+                    "next": {},
+                    "previous": {},
+                    "results": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "id",
+                          "name",
+                          "country_code",
+                          "latitude",
+                          "longitude"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "country_code": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "latitude": {
+                            "type": "number"
+                          },
+                          "longitude": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "count": 4,
+                      "next": null,
+                      "previous": null,
+                      "results": [
+                        {
+                          "id": "2a00033b-9556-455a-9fc7-d85667d80c98",
+                          "name": "Bh",
+                          "country_code": "BR",
+                          "latitude": -19.912998,
+                          "longitude": -49.276855
+                        },
+                        {
+                          "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                          "name": "Curitiba",
+                          "country_code": "BR",
+                          "latitude": -25.441105,
+                          "longitude": -49.276855
+                        },
+                        {
+                          "id": "32bd6252-9a4b-4c26-b2b6-d005210e2679",
+                          "name": "Los Angeles",
+                          "country_code": "US",
+                          "latitude": 34.05,
+                          "longitude": -118.25
+                        },
+                        {
+                          "id": "7e6b5d95-fc83-4841-95ed-e76ec48d3135",
+                          "name": "Test",
+                          "country_code": "ar",
+                          "latitude": 12,
+                          "longitude": 21
+                        }
+                      ]
+                    }
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "List": {
                     "value": {
-                      "detail": "string",
-                      "errors": [
+                      "count": 4,
+                      "next": null,
+                      "previous": null,
+                      "results": [
                         {
-                          "field": "FIELD_NAME",
-                          "errors": [
-                            "ERROR_MESSAGE"
-                          ]
+                          "id": "2a00033b-9556-455a-9fc7-d85667d80c98",
+                          "name": "Bh",
+                          "country_code": "BR",
+                          "latitude": -19.912998,
+                          "longitude": -49.276855
+                        },
+                        {
+                          "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                          "name": "Curitiba",
+                          "country_code": "BR",
+                          "latitude": -25.441105,
+                          "longitude": -49.276855
+                        },
+                        {
+                          "id": "32bd6252-9a4b-4c26-b2b6-d005210e2679",
+                          "name": "Los Angeles",
+                          "country_code": "US",
+                          "latitude": 34.05,
+                          "longitude": -118.25
                         }
                       ]
                     }
@@ -53,18 +143,68 @@
                 }
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized",
+          }
+        },
+        "operationId": "get-brands",
+        "description": "Return list of cities",
+        "security": [],
+        "tags": [
+          "city"
+        ]
+      },
+      "parameters": []
+    },
+    "/city/": {
+      "post": {
+        "summary": "Create City",
+        "operationId": "post-city",
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "latitude": {
+                      "type": "number"
+                    },
+                    "longitude": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "country_code",
+                    "latitude",
+                    "longitude"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "name": "Bh",
+                      "country_code": "BR",
+                      "latitude": -19.912998,
+                      "longitude": -49.276855
+                    }
+                  }
                 },
                 "examples": {
-                  "example-1": {
+                  "BH": {
                     "value": {
-                      "detail": "Authentication credentials were not provided."
+                      "id": "2a00033b-9556-455a-9fc7-d85667d80c98",
+                      "name": "Bh",
+                      "country_code": "BR",
+                      "latitude": -19.912998,
+                      "longitude": -49.276855
                     }
                   }
                 }
@@ -72,105 +212,740 @@
             }
           }
         },
-        "operationId": "get-api-health",
-        "description": "Check the health of the API"
-      }
-    }
-  },
-  "tags": [
-  ],
-  "components": {
-    "securitySchemes": {
-      "BearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      },
-      "PublicAuth": {
-        "type": "http",
-        "scheme": "public"
-      }
-    },
-    "schemas": {
-      "BadRequest": {
-        "type": "object",
-        "properties": {
-          "detail": {
-            "type": "string"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "field": {
-                  "type": "string",
-                  "example": "FIELD_NAME"
-                },
-                "errors": {
-                  "type": "array",
-                  "items": {
+        "description": "Create City",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "name": {
                     "type": "string",
-                    "example": "ERROR_MESSAGE"
+                    "minLength": 1
+                  },
+                  "country_code": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "latitude": {
+                    "type": "number"
+                  },
+                  "longitude": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "name",
+                  "country_code",
+                  "latitude",
+                  "longitude"
+                ],
+                "x-examples": {
+                  "example-1": {
+                    "name": "Bh",
+                    "country_code": "BR",
+                    "latitude": -19.912998,
+                    "longitude": -49.276855
                   }
                 }
               },
-              "required": [
-                "field",
-                "errors"
-              ],
-              "additionalProperties": false
-            },
-            "required": [
-              "detail",
-              "errors"
-            ],
-            "additionalProperties": false
+              "examples": {
+                "Bh": {
+                  "value": {
+                    "id": "2a00033b-9556-455a-9fc7-d85667d80c98",
+                    "name": "Bh",
+                    "country_code": "BR",
+                    "latitude": -19.912998,
+                    "longitude": -49.276855
+                  }
+                }
+              }
+            }
           }
         },
-        "required": [
-          "field_name"
-        ],
-        "additionalProperties": false
+        "tags": [
+          "city"
+        ]
       },
-      "Forbidden": {
-        "type": "object",
-        "properties": {
-          "detail": {
-            "type": "string",
-            "example": "Forbidden."
+      "parameters": []
+    },
+    "/results/": {
+      "get": {
+        "summary": "List Results",
+        "tags": [
+          "result"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    },
+                    "next": {},
+                    "previous": {},
+                    "results": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "id",
+                          "start_date",
+                          "end_date",
+                          "distance",
+                          "date",
+                          "earthquake"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "start_date": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "end_date": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "distance": {
+                            "type": "number"
+                          },
+                          "city": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "country_code": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "latitude": {
+                                "type": "number"
+                              },
+                              "longitude": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "country_code",
+                              "latitude",
+                              "longitude"
+                            ]
+                          },
+                          "date": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "earthquake": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "count": 13,
+                      "next": null,
+                      "previous": null,
+                      "results": [
+                        {
+                          "id": "ef55e9dc-5114-41f0-a2a3-f90d0fe7fdd6",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "3a76e153-2c91-4e34-8f19-8969f593fe1c",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "ae25277b-f634-4a3a-98c8-a38205a443b6",
+                          "start_date": "2022-05-08",
+                          "end_date": "2022-06-14",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "1c717c1a-6e0a-4e65-9db6-d50f01041bcc",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "d6addd2d-8eed-4ccb-9746-de15eeda1b93",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "d104cee4-57fd-4cc8-823f-8d848d677748",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 680.2193443276642,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "3be41d46-23bc-4cd4-a0ea-6bd613954cfb",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 680.2193443276642,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "7f6477e2-685c-488f-923e-8861e130879c",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 680.2193443276642,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "ebf172b8-5e40-4daf-9c61-9298bd43bb1b",
+                          "start_date": "2022-04-01",
+                          "end_date": "2022-05-01",
+                          "distance": 712.0391876836366,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-04-15",
+                          "earthquake": "M 5.1 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "b74d582c-01ca-4468-863e-a33742e64617",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 989.2109158424545,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c98",
+                            "name": "Bh",
+                            "country_code": "BR",
+                            "latitude": -19.912998,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-02",
+                          "earthquake": "M 5.6 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "9f96dca9-b6ff-44b2-a86b-085f33a360cf",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 989.2109158424545,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c98",
+                            "name": "Bh",
+                            "country_code": "BR",
+                            "latitude": -19.912998,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-02",
+                          "earthquake": "M 5.6 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "80278cb1-e7ac-4784-8a67-68700737ff12",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 1319.181492342725,
+                          "city": {
+                            "id": "32bd6252-9a4b-4c26-b2b6-d005210e2679",
+                            "name": "Los Angeles",
+                            "country_code": "US",
+                            "latitude": 34.05,
+                            "longitude": -118.25
+                          },
+                          "date": "2022-05-01",
+                          "earthquake": "M 4.7 - 274 km N of Kuril’sk, Russia"
+                        },
+                        {
+                          "id": "4d01901e-cedb-451d-88b9-918ea8f4704e",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 1319.181492342725,
+                          "city": {
+                            "id": "32bd6252-9a4b-4c26-b2b6-d005210e2679",
+                            "name": "Los Angeles",
+                            "country_code": "US",
+                            "latitude": 34.05,
+                            "longitude": -118.25
+                          },
+                          "date": "2022-05-01",
+                          "earthquake": "M 4.7 - 274 km N of Kuril’sk, Russia"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "LIST": {
+                    "value": {
+                      "count": 13,
+                      "next": null,
+                      "previous": null,
+                      "results": [
+                        {
+                          "id": "ef55e9dc-5114-41f0-a2a3-f90d0fe7fdd6",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "3a76e153-2c91-4e34-8f19-8969f593fe1c",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "ae25277b-f634-4a3a-98c8-a38205a443b6",
+                          "start_date": "2022-05-08",
+                          "end_date": "2022-06-14",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "1c717c1a-6e0a-4e65-9db6-d50f01041bcc",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "d6addd2d-8eed-4ccb-9746-de15eeda1b93",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 679.4797436893457,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "d104cee4-57fd-4cc8-823f-8d848d677748",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 680.2193443276642,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "3be41d46-23bc-4cd4-a0ea-6bd613954cfb",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 680.2193443276642,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "7f6477e2-685c-488f-923e-8861e130879c",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 680.2193443276642,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-10",
+                          "earthquake": "M 5.4 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "ebf172b8-5e40-4daf-9c61-9298bd43bb1b",
+                          "start_date": "2022-04-01",
+                          "end_date": "2022-05-01",
+                          "distance": 712.0391876836366,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                            "name": "Curitiba",
+                            "country_code": "BR",
+                            "latitude": -25.441105,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-04-15",
+                          "earthquake": "M 5.1 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "b74d582c-01ca-4468-863e-a33742e64617",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 989.2109158424545,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c98",
+                            "name": "Bh",
+                            "country_code": "BR",
+                            "latitude": -19.912998,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-02",
+                          "earthquake": "M 5.6 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "9f96dca9-b6ff-44b2-a86b-085f33a360cf",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 989.2109158424545,
+                          "city": {
+                            "id": "2a00033b-9556-455a-9fc7-d85667d80c98",
+                            "name": "Bh",
+                            "country_code": "BR",
+                            "latitude": -19.912998,
+                            "longitude": -49.276855
+                          },
+                          "date": "2022-05-02",
+                          "earthquake": "M 5.6 - South Sandwich Islands region"
+                        },
+                        {
+                          "id": "80278cb1-e7ac-4784-8a67-68700737ff12",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 1319.181492342725,
+                          "city": {
+                            "id": "32bd6252-9a4b-4c26-b2b6-d005210e2679",
+                            "name": "Los Angeles",
+                            "country_code": "US",
+                            "latitude": 34.05,
+                            "longitude": -118.25
+                          },
+                          "date": "2022-05-01",
+                          "earthquake": "M 4.7 - 274 km N of Kuril’sk, Russia"
+                        },
+                        {
+                          "id": "4d01901e-cedb-451d-88b9-918ea8f4704e",
+                          "start_date": "2022-05-01",
+                          "end_date": "2022-06-01",
+                          "distance": 1319.181492342725,
+                          "city": {
+                            "id": "32bd6252-9a4b-4c26-b2b6-d005210e2679",
+                            "name": "Los Angeles",
+                            "country_code": "US",
+                            "latitude": 34.05,
+                            "longitude": -118.25
+                          },
+                          "date": "2022-05-01",
+                          "earthquake": "M 4.7 - 274 km N of Kuril’sk, Russia"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "required": [
-          "message"
-        ],
-        "additionalProperties": false
-      },
-      "NotFound": {
-        "type": "object",
-        "properties": {
-          "detail": {
-            "type": "string",
-            "example": "Not Found."
+        "operationId": "get-results",
+        "description": "List results"
+      }
+    },
+    "/result/": {
+      "post": {
+        "summary": "Create Result",
+        "operationId": "post-result",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "start_date": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "end_date": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "distance": {
+                      "type": "number"
+                    },
+                    "city": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "date": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "earthquake": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "start_date",
+                    "end_date",
+                    "distance",
+                    "city",
+                    "date",
+                    "earthquake"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "id": "9e370187-4859-4d2c-9671-204747bec7f2",
+                      "start_date": "2022-05-01",
+                      "end_date": "2022-06-01",
+                      "distance": 680.2193443276642,
+                      "city": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                      "date": "2022-05-10",
+                      "earthquake": "M 5.4 - South Sandwich Islands region"
+                    }
+                  }
+                },
+                "examples": {
+                  "RESULT": {
+                    "value": {
+                      "id": "9e370187-4859-4d2c-9671-204747bec7f2",
+                      "start_date": "2022-05-01",
+                      "end_date": "2022-06-01",
+                      "distance": 680.2193443276642,
+                      "city": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                      "date": "2022-05-10",
+                      "earthquake": "M 5.4 - South Sandwich Islands region"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "required": [
-          "message"
-        ],
-        "additionalProperties": false
-      },
-      "Unauthorized": {
-        "type": "object",
-        "properties": {
-          "detail": {
-            "type": "string",
-            "example": "Authentication credentials were not provided."
+        "description": "Create Result",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "start_date": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "end_date": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "distance": {
+                    "type": "number"
+                  },
+                  "city": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "date": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "earthquake": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "start_date",
+                  "end_date",
+                  "distance",
+                  "city",
+                  "date",
+                  "earthquake"
+                ],
+                "x-examples": {
+                  "example-1": {
+                    "start_date": "2022-5-01",
+                    "end_date": "2022-6-01",
+                    "distance": 680.2193443276642,
+                    "city": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                    "date": "2022-5-10",
+                    "earthquake": "M 5.4 - South Sandwich Islands region"
+                  }
+                }
+              },
+              "examples": {
+                "RESULT": {
+                  "value": {
+                    "start_date": "2022-5-01",
+                    "end_date": "2022-6-01",
+                    "distance": 680.2193443276642,
+                    "city": "2a00033b-9556-455a-9fc7-d85667d80c97",
+                    "date": "2022-5-10",
+                    "earthquake": "M 5.4 - South Sandwich Islands region"
+                  }
+                }
+              }
+            }
           }
         },
-        "required": [
-          "message"
-        ],
-        "additionalProperties": false
+        "tags": [
+          "result"
+        ]
       }
     }
-  }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "tags": [
+    {
+      "name": "city"
+    },
+    {
+      "name": "result"
+    }
+  ]
 }

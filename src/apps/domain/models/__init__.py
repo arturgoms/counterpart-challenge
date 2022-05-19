@@ -1,6 +1,7 @@
 from apps.domain.models.dynamic_config_parameter.models import DynamicConfigParameter
-from apps.domain.models.user.models import User
-from apps.domain.models.user_role.models import UserRole
+from apps.domain.models.panel_user.models import PanelUser
+from apps.domain.models.city.models import City
+from apps.domain.models.results.models import Results
 from apps.domain.views import *  # noqa
 from django.db.models import CharField
 from django.db.models.signals import post_migrate

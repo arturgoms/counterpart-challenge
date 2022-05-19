@@ -21,7 +21,11 @@ include("base.py")
 config = decouple.AutoConfig(BASE_DIR.parent)
 
 # Change this to your domain
-CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://localhost:1337"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://localhost:1337",
+    "http://localhost:8080",
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

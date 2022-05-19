@@ -49,6 +49,7 @@ services:
       - ./src/static/:/app/static/
     depends_on:
       - db
+      - redis
     environment:
       STARTUP: APP
     ports:
@@ -58,16 +59,27 @@ services:
       interval: 1s
       timeout: 3s
       retries: 10
-  nginx:
+  frontend:
+    restart: always
     build:
       context: .
-      dockerfile: containers/nginx/Dockerfile
-    volumes:
-      - ./src/static/:/staticfiles
-    ports:
-      - "1337:80"
+      dockerfile: containers/front/Dockerfile
+    container_name: frontend
     depends_on:
       - web
+    ports:
+      - "80:80"
+#  nginx:
+#    build:
+#      context: .
+#      dockerfile: containers/nginx/Dockerfile
+#    volumes:
+#      - ./src/static/:/staticfiles
+#      - ./frontend/dist/:/usr/share/nginx/html
+#    ports:
+#      - "1337:80"
+#    depends_on:
+#      - web
   worker:
     build:
       context: .
