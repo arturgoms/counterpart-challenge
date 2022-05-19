@@ -21,6 +21,21 @@ The API document can be found in src/docs/api.openapi.json
 - Test, Lint (pylint), Formatter (black), Build pipelines
 - Make file with a lot of shortcuts
 - Kubernetes architecture
+
+*** Run
+You can run everything inside container but you ill need to build it everytime that you change something in the django app
+
+Up the containers:
+#+BEGIN_SRC shell
+docker compose up -d --build
+#+END_SRC
+
+Now you need to use the nginx port to access it:
+- frontend - http:/127.0.0.1:80/
+- api - http:/127.0.0.1:80/api
+And Silk will not exist anymore because you are using a 'production like' environment.
+- If you get 502 bad gateway just wait a little :)
+
 ** Development
 *** Minimal environment
 1 Clone and enter the dir
@@ -62,20 +77,6 @@ npm run serve
 #+END_SRC
 7 Access
 - frontend - http:/127.0.0.1:8080/
-
-*** Docker compose
-Alternatively you can run everything inside container but you ill need to build it everytime that you change something in the django app
-
-Up the containers:
-#+BEGIN_SRC shell
-docker compose up -d --build
-#+END_SRC
-
-Now you need to use the nginx port to access it:
-- frontend - http:/127.0.0.1:80/
-- api - http:/127.0.0.1:80/api
-And Silk will not exist anymore because you are using a 'production like' environment.
-- If you get 502 bad gateway just wait a little :)
 
 ** Production
 In production you will need to apply the configs for kubernetes.
